@@ -1,11 +1,6 @@
 ﻿using EFxceptions;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Standard.AI.Data.EntityIntelligence.Brokers.Storages
@@ -28,9 +23,11 @@ namespace Standard.AI.Data.EntityIntelligence.Brokers.Storages
 
         public override void Dispose() { }
 
-        public ValueTask<IEnumerable<dynamic>> Execute(string query)
+        public async ValueTask<dynamic> Execute(string query)
         {
-            throw new NotImplementedException();
+            return await Database
+                            .SqlQuery<dynamic>(@$"{query}")
+                            .SingleAsync();
         }
     }
 }
